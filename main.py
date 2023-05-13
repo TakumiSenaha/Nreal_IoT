@@ -8,10 +8,7 @@ import usb.core
 import usb.util
 import pygame
 import time
-<<<<<<< HEAD
 import RPi.GPIO as GPIO
-=======
->>>>>>> 577a2c0b4a0670d8ace8454761ad1c2d9344320c
 
 ## 全画面黒
 def main_loop():
@@ -26,13 +23,7 @@ def main_loop():
         dev = usb.core.find(idVendor=0x2886, idProduct=0x0018)
         if dev:
             Mic_tuning = Tuning(dev)
-<<<<<<< HEAD
             while(flyobj.display_thread.is_alive()):
-=======
-            print(flyobj.display_thread.is_alive())
-            while(flyobj.display_thread.is_alive()):
-                #print (Mic_tuning.direction)
->>>>>>> 577a2c0b4a0670d8ace8454761ad1c2d9344320c
                 dB = v.get_dB()
                 if(dB >= -50):
                     flyobj.gen_triangle(angle=180 - Mic_tuning.direction, scale=(dB+50)/20)
@@ -49,7 +40,3 @@ if __name__ == '__main__':
         pass
     pass
 GPIO.cleanup()
-<<<<<<< HEAD
-
-=======
->>>>>>> 577a2c0b4a0670d8ace8454761ad1c2d9344320c
