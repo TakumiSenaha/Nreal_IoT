@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # not use
+=======
+>>>>>>> 577a2c0b4a0670d8ace8454761ad1c2d9344320c
 from tuning import Tuning
 import flyobj
 import numpy as np
@@ -14,7 +17,11 @@ def get_direction(dB):
         flyobj.init()
         while((flyobj.display_thread.is_alive()) and (dB >= -50) ):
             #print (Mic_tuning.direction)
+<<<<<<< HEAD
             flyobj.gen_triangle(angle=180 - Mic_tuning.direction, scale=dB+50)
+=======
+            flyobj.gen_triangle(angle=180 - Mic_tuning.direction, scale=(dB+50)/20)
+>>>>>>> 577a2c0b4a0670d8ace8454761ad1c2d9344320c
             time.sleep(0.1)
             
 if __name__ == "__main__":
