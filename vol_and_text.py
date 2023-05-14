@@ -1,11 +1,9 @@
 import time
 import pyaudio
 import numpy as np
-import speech_recognition as sr
 from speech_recognition import *
-from matplotlib import pyplot as plt
 
-class Recognizer_(sr.Recognizer):
+class _Recognizer_(Recognizer):
     def __init__(self):
         self.dB = 0.0
         super().__init__()
@@ -117,31 +115,67 @@ class Recognizer_(sr.Recognizer):
 
         return AudioData(frame_data, source.SAMPLE_RATE, source.SAMPLE_WIDTH)
 
-
 class Voice:
-    def __init__(self, device_index) -> None:
-        self.r = Recognizer_()
-        self.m = sr.Microphone(device_index)
+    """
+    A class for interacting with the microphone and Google speech recognition service
 
-        def callback(recognizer, audio):
+    Attributes:
+        device_index (int): the index of the microphone device to use
+        callback (function(str)): the function to call with the recognized text
+        language (str): the language code for the recognition service, default is 'ja-JP'
+    """
+    def __init__(self, device_index:int, callback:callable(str), language="ja-JP", api_key=None) -> None:
+        """
+        Initializes the Voice object with the specified device, callback function, and language code.
+        
+        Args:
+            device_index (int): the index of the microphone device to use
+            callback (function(str)): the function to call with the recognized text
+            language (str): the language code for the recognition service. Defaults to 'ja-JP'.
+        """        
+        self.r = _Recognizer_()
+        self.m = Microphone(device_index)
+        self.callback = callback
+        self.language = language
+        with open("apikey.json") as f:
+           self.credentials = f.read()
+
+        def get_text(recognizer, audio):
             try:
-                self.text = recognizer.recognize_google(audio, language="ja-JP")
-                print(self.text)
-            except sr.UnknownValueError:
-                print("Google Speech Recognition could not understand audio")
-            except sr.RequestError as e:
+                if api_key == None:
+                    self.text = recognizer.recognize_google(audio, language=language)
+                else:
+                    self.text = recognizer.recognize_google_cloud(audio, credentials_json="./apikey.json", language=language)
+                self.callback(self.text)
+            except UnknownValueError:
+                print("Recognition could not understand audio")
+            except RequestError as e:
                 print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
         with self.m as source:
             self.r.adjust_for_ambient_noise(source) 
-        self.stop_listening = self.r.listen_in_background(self.m, callback)
+        self.stop_listening = self.r.listen_in_background(self.m, get_text)
 
-    def get_dB(self):
+    def get_dB(self) -> float:
+        """
+        Returns the current decibel level of the microphone.
+
+        Returns:
+            float: the current decibel level of the microphone
+        """
         return self.r.dB
     
+    def set_language(self, language:str) -> None:
+        """
+        Sets the language code for the recognition service.
+
+        Args:
+            language (str): the new language code for the recognition service.
+        """
+        self.language = language
 
 if __name__ == "__main__":
-    v = Voice(device_index=0)
+    v = Voice(device_index=0, callback=lambda a:print(a), language="ja-JP")
     try:
         while(True):
             dB = v.get_dB()
