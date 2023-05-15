@@ -35,6 +35,7 @@ def main_loop():
                     touch = touchsensor.read_touchsensor()
                     if(touch == 1):
                         v.change_lang()
+                        print(f"cahnge language to {v.language}")
                         time.sleep(3.0)
                         continue
                     ## 0.5秒間以上長押しされたら言語変更
