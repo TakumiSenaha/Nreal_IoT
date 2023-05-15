@@ -122,7 +122,9 @@ class Voice:
     def __init__(self, device_index) -> None:
         self.r = Recognizer_()
         self.m = sr.Microphone(device_index)
-
+        ##change_piont
+        self.lang = "ja-JP"
+        ##
         def callback(recognizer, audio):
             try:
                 self.text = recognizer.recognize_google(audio, language="ja-JP")
@@ -139,6 +141,11 @@ class Voice:
     def get_dB(self):
         return self.r.dB
     
+    def change_lang(self):
+            if self.lang == "ja-JP":
+                self.lang = "us-En"
+            elif self.lang == "us-En":
+                self.lang = "ja-JP"
 
 if __name__ == "__main__":
     v = Voice(device_index=0)
