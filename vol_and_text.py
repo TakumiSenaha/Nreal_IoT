@@ -172,7 +172,7 @@ class Voice:
         Args:
             language (str): the new language code for the recognition service.
         """
-        self.language = language
+        self.language = languag
 
 if __name__ == "__main__":
     v = Voice(device_index=0, callback=lambda a:print(a), language="ja-JP")
