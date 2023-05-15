@@ -173,7 +173,12 @@ class Voice:
             language (str): the new language code for the recognition service.
         """
         self.language = languag
-
+        
+    def change_lang(self):
+            if self.language == "ja-JP":
+                self.language = "us-En"
+            elif self.language == "us-En":
+                self.language = "ja-JP"
 if __name__ == "__main__":
     v = Voice(device_index=0, callback=lambda a:print(a), language="ja-JP")
     try:
