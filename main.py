@@ -12,6 +12,7 @@ import RPi.GPIO as GPIO
 
 ## 全画面黒
 def main_loop():
+    cnt = 0
     v = voice.Voice(device_index=0)
     flyobj.init()
     while True:
@@ -34,7 +35,8 @@ def main_loop():
                     ##ここでもう一度touchsensor.read_touchsensor()を呼び出し
                     touch = touchsensor.read_touchsensor()
                     if(touch == 1):
-                        v.change_lang()
+                        cnt += 1
+                        v.change_lang(cnt % len(v.lang_list))
                         print(f"cahnge language to {v.language}")
                         time.sleep(3.0)
                         continue
