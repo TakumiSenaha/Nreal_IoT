@@ -137,6 +137,7 @@ class Voice:
         self.m = Microphone(device_index)
         self.callback = callback
         self.language = language
+        self.lang_list = ["ja-JP", "us-EN"]
         with open("apikey.json") as f:
            self.credentials = f.read()
 
@@ -172,6 +173,7 @@ class Voice:
         Args:
             language (str): the new language code for the recognition service.
         """
+<<<<<<< Updated upstream
         self.language = languag
         
     def change_lang(self):
@@ -179,6 +181,14 @@ class Voice:
                 self.language = "us-En"
             elif self.language == "us-En":
                 self.language = "ja-JP"
+=======
+        self.language = language
+    
+    def change_lang(self,lang_):
+        self.language = lang_
+    
+
+>>>>>>> Stashed changes
 if __name__ == "__main__":
     v = Voice(device_index=0, callback=lambda a:print(a), language="ja-JP")
     try:
