@@ -116,11 +116,31 @@ class _Recognizer_(Recognizer):
         return AudioData(frame_data, source.SAMPLE_RATE, source.SAMPLE_WIDTH)
 
 class Voice:
-    def __init__(self, device_index) -> None:
-        self.r = Recognizer_()
-        self.m = sr.Microphone(device_index)
+    """
+    A class for interacting with the microphone and Google speech recognition service
 
-        def callback(recognizer, audio):
+    Attributes:
+        device_index (int): the index of the microphone device to use
+        callback (function(str)): the function to call with the recognized text
+        language (str): the language code for the recognition service, default is 'ja-JP'
+    """
+    def __init__(self, device_index:int, callback:callable(str), language="ja-JP", api_key=None) -> None:
+        """
+        Initializes the Voice object with the specified device, callback function, and language code.
+        
+        Args:
+            device_index (int): the index of the microphone device to use
+            callback (function(str)): the function to call with the recognized text
+            language (str): the language code for the recognition service. Defaults to 'ja-JP'.
+        """        
+        self.r = _Recognizer_()
+        self.m = Microphone(device_index)
+        self.callback = callback
+        self.language = language
+        with open("apikey.json") as f:
+           self.credentials = f.read()
+
+        def get_text(recognizer, audio):
             try:
                 if api_key == None:
                     self.text = recognizer.recognize_google(audio, language=language)
@@ -144,6 +164,21 @@ class Voice:
             float: the current decibel level of the microphone
         """
         return self.r.dB
+    
+    def set_language(self, language:str) -> None:
+        """
+        Sets the language code for the recognition service.
+
+        Args:
+            language (str): the new language code for the recognition service.
+        """
+        self.language = language
+    
+    def change_lang(self):
+        if self.language == "ja-JP":
+            self.language = "us-En"
+        elif self.language == "us-En":
+            self.language = "ja-JP"
     
 
 if __name__ == "__main__":
