@@ -30,6 +30,15 @@ def main_loop():
                     flyobj.gen_triangle(angle=180 - Mic_tuning.direction, scale=(dB+50)/20)
                 touch = touchsensor.read_touchsensor()
                 if(touch == 1):
+                    ##ここでもう一度touchsensor.read_touchsensor()を呼び出し
+                    time.sleep(0.5)
+                    touch = touchsensor.read_touchsensor()
+                    if(touch == 1):
+                        v.change_lang()
+                        time.sleep(3.0)
+                        continue
+                    ## 0.5秒間以上長押しされたら言語変更
+                    ##turn off object generation
                     break
                 time.sleep(0.1)
 
