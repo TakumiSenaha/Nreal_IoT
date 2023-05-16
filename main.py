@@ -8,12 +8,13 @@ import usb.core
 import usb.util
 import pygame
 import time
+import sys
 import RPi.GPIO as GPIO
 
 ## 全画面黒
 def main_loop():
     cnt = 0
-    v = voice.Voice(device_index=0)
+    v = voice.Voice(device_index=0, callback=lambda a:print(a), language="ja-JP")
     flyobj.init()
     while True:
         touchsensor.initial_process()
@@ -38,7 +39,11 @@ def main_loop():
                         cnt += 1
                         v.change_lang(cnt % len(v.lang_list))
                         print(f"cahnge language to {v.language}")
-                        time.sleep(3.0)
+                        time.sleep(2.0)
+                        touch = touchsensor.read_touchsensor()
+                        if(touch == 1):
+                            print("end")
+                            sys.exit()
                         continue
                     ## 0.5秒間以上長押しされたら言語変更
                     ##turn off object generation
