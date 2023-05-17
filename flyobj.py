@@ -124,6 +124,47 @@ class Triangle(Flyobj):
             glVertex3dv(v)
         glEnd()
 
+class TextObj():
+    """
+    A class representing a text
+
+    Attributes:
+        objs (list) : A list of all text objects. 
+        current_time (float) : Current time [s]
+        screen (Surface) : Surface object.
+        font : Font object.
+    """
+    objs = []
+    current_time = time.time()
+    screen = None
+                               
+    def __init__(self, text, angle = 0.0, size = 100, r = 10.0, lifetime = 1.0) -> None:
+        self.end_time = lifetime + TextObj.current_time
+        self.font = pygame.font.Font("ipaexg.ttf", int(size))
+        self.t = self.font.render(text, True, (0, 255, 0, 255)).convert_alpha()
+        sw, sh = TextObj.screen.get_width(), TextObj.screen.get_height()
+        self.tw, self.th = self.t.get_width(), self.t.get_height()
+        self.x = sw/2 - self.tw/2 + r * np.cos(angle*np.pi/180.0)
+        self.y = sh/2 - self.th/2 + r * np.sin(angle*np.pi/180.0)
+        TextObj.objs.append(self)
+
+    def draw(self):
+        if self.end_time <= TextObj.current_time:
+            del(self)
+        else:
+            text_data = pygame.image.tostring(self.t, "RGBA", True)
+            glWindowPos2f(self.x, self.y)
+            glDrawPixels(self.tw, self.th, GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+    
+    def __del__(self):
+        TextObj.objs.remove(self)
+
+    @classmethod
+    def display(cls):
+        cls.current_time = time.time() # Update current time
+        for obj in cls.objs:
+            obj.draw()
+
 def main_loop(width=800, height=600):
     """
     The main loop of pygame.
@@ -134,13 +175,18 @@ def main_loop(width=800, height=600):
         height (number): Height of pygame display.    
     """
     pygame.init()
-    pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL)
+    screen = pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL)
+    # For text drawing
+    TextObj.screen = screen
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
     glMatrixMode(GL_MODELVIEW)
     gluPerspective(45, (width/height), 0.1, 50.0)
     gluLookAt(0.0, -15.0, -15.0,
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0,)
+              
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -148,6 +194,7 @@ def main_loop(width=800, height=600):
                 quit()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         Triangle.display()
+        TextObj.display()
         pygame.display.flip()
         pygame.time.wait(10)
 
@@ -167,6 +214,9 @@ def gen_triangle(angle=0.0, scale=1.0, v=0.2, r_start=10.0, r_end=5.0) -> None:
     """
     Triangle(angle, scale, v, r_start, r_end)
 
+def gen_text(text = "", angle = 0.0, size = 50, r = 200.0, lifetime = 1.0) -> None:
+    TextObj(text, angle, size, r, lifetime)
+
 display_thread = None
 
 def init(width=800, height=600):
@@ -180,7 +230,9 @@ def init(width=800, height=600):
 # Example code
 if __name__ == "__main__":
     init()
+    time.sleep(1)
     while(display_thread.is_alive()):
-#         np.random.random()*360.0
-        gen_triangle(angle=180, scale=np.random.random()+1.0)
+        angle =  np.random.random()*360.0
+        gen_triangle(angle, scale=np.random.random()+1.0)
+        gen_text("こんにちは", angle+180)
         time.sleep(0.1)
