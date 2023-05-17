@@ -2,19 +2,24 @@ from tuning import Tuning
 import flyobj
 import touchsensor
 import vol_and_text as voice
-import DOA
 import numpy as np
 import usb.core
 import usb.util
 import pygame
 import time
 import sys
+import os
 import RPi.GPIO as GPIO
 
 ## 全画面黒
 def main_loop():
     cnt = 0
-    v = voice.Voice(device_index=0, callback=lambda a:print(a), language="ja-JP")
+    ##get angle interface
+    dev = usb.core.find(idVendor=0x2886, idProduct=0x0018)
+    if dev:
+        Mic_tuning = Tuning(dev)
+    ##get voice interface
+    v = voice.Voice(device_index=0, callback=lambda a:flyobj.gen_text(a, Mic_tuning.direction), language="ja-JP")
     flyobj.init()
     while True:
         touchsensor.initial_process()
@@ -22,9 +27,6 @@ def main_loop():
             touch = touchsensor.read_touchsensor()
             if(touch == 1):
                 break
-        dev = usb.core.find(idVendor=0x2886, idProduct=0x0018)
-        if dev:
-            Mic_tuning = Tuning(dev)
             while(flyobj.display_thread.is_alive()):
                 dB = v.get_dB()
                 if(dB >= -50):
@@ -43,7 +45,7 @@ def main_loop():
                         touch = touchsensor.read_touchsensor()
                         if(touch == 1):
                             print("end")
-                            sys.exit()
+                            os._exit()
                         continue
                     ## 0.5秒間以上長押しされたら言語変更
                     ##turn off object generation

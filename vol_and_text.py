@@ -138,8 +138,9 @@ class Voice:
         self.callback = callback
         self.language = language
         self.lang_list = ["ja-JP", "us-EN"]
-        with open("apikey.json") as f:
-           self.credentials = f.read()
+        if (api_key != None):
+            with open("apikey.json") as f:
+                self.credentials = f.read()
 
         def get_text(recognizer, audio):
             try:
@@ -175,8 +176,8 @@ class Voice:
         """
         self.language = language
     
-    def change_lang(self,lang_):
-        self.language = lang_
+    def change_lang(self,lang_num):
+        self.language = self.lang_list[lang_num]
     
 
 if __name__ == "__main__":
