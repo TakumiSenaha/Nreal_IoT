@@ -12,20 +12,21 @@ import os
 import RPi.GPIO as GPIO
 
 # 全画面黒
-text = ""
+textobj_flg = False
+text = []
 def set_text(a):
-    text = a
-    print(text)
+    if (textobj_flg == True):
+        text.append(a)
 
 def main_loop():
+    global textobj_flg
     cnt = 0
     # get angle interface
     dev = usb.core.find(idVendor=0x2886, idProduct=0x0018)
     if dev:
         Mic_tuning = Tuning(dev)
     # get voice interface
-    v = voice.Voice(device_index=0, callback=lambda a: flyobj.gen_text(
-        a, Mic_tuning.direction), language="ja-JP")
+    v = voice.Voice(device_index=0, callback=lambda a: set_text(a), language="ja-JP")
     flyobj.init()
     while True:
         touchsensor.initial_process()
@@ -34,11 +35,14 @@ def main_loop():
             if (touch == 1):
                 break
         while (flyobj.display_thread.is_alive()):
+            textobj_flg = True
             dB = v.get_dB()
             if (dB >= -50):
                 flyobj.gen_triangle(
                     angle=180 - Mic_tuning.direction, scale=(dB+50)/20)
-                #flyobj.gen_text(text, Mic_tuning.direction)
+                if(len(text) >= 1):
+                    flyobj.gen_text(text[0], Mic_tuning.direction)
+                    del text[0]
             touch = touchsensor.read_touchsensor()
             if (touch == 1):
                 # 長押し間隔の設定
@@ -57,6 +61,7 @@ def main_loop():
                     continue
                 # 0.5秒間以上長押しされたら言語変更
                 # turn off object generation
+                textobj_flg = False
                 break
             time.sleep(0.1)
 
