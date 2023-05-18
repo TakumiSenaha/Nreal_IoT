@@ -53,7 +53,7 @@ def main_loop():
                     touch = touchsensor.read_touchsensor()
                     if (touch == 1):
                         print("end")
-                        os._exit()
+                        os._exit(0)
                     continue
                 # 0.5秒間以上長押しされたら言語変更
                 # turn off object generation
