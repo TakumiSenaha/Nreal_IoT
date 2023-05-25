@@ -1,5 +1,8 @@
-# Nreal_IoT
+# Nreal for IoT
+
 ## Summary of IoT for Nreal
+<img src="https://i.ebayimg.com/thumbs/images/g/HzgAAOSwSgdiaRQp/s-l1600.jpg" alt="NrealAir_logo" width="120px"><img src="https://i.ebayimg.com/thumbs/images/g/qkgAAOSwKzViSArn/s-l1600.jpg" alt="NrealAir_logo" width="120px">
+
 This project aims to visualize the sensor information of the surroundings using "Nreal Ari," which was released on March 4, 2022.
 
 ## Specific Approaches
@@ -40,7 +43,7 @@ It is assumed to be run with administrator privileges and with python3 series. D
 * Pyhton
 * Nreal
 * ReSpeaker Mic Array v2.0
-* * Raspberry Pi
+* Raspberry Pi
 
 # References
 ## For ReSpeaker Mic Array v2.0
