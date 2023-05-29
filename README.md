@@ -1,5 +1,18 @@
 # Nreal for IoT
+<details><summary> May 26, 2023 : Regarding Nreal to Change Name of Company to "Xreal"</summary>
 
+Nreal Japan, a developer and seller of augmented reality (AR) glasses, announced on May 26 that it will change its company name and brand name.  
+From now on, "Nreal" will be developed as "XREAL," and after May 25, the respective names will be as follows  
+* Company name : Japan Xreal Co. (formerly Japan Nreal Co., Ltd.)
+* Brand name : XREAL (formerly Nreal)
+* Official website URL: https://www.xreal.com/jp (Formerly https://www.nreal.jp/)
+* Product name
+  * XREAL Air (Formerly Nreal Air)
+  * XREAL Adapter (formerly Nreal Adapte)
+  * XREAL Light (Formerly Nreallight)
+
+</details>
+ 
 ## Summary of IoT for Nreal
 <img src="https://i.ebayimg.com/thumbs/images/g/HzgAAOSwSgdiaRQp/s-l1600.jpg" alt="NrealAir_logo" width="120px"><img src="https://i.ebayimg.com/thumbs/images/g/qkgAAOSwKzViSArn/s-l1600.jpg" alt="NrealAir_logo" width="120px">
 
