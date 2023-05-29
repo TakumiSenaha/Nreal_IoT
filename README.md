@@ -28,10 +28,14 @@ Using Python's "Pygame", we implemented a function to generate an arrow-like obj
 
 ![flyobj_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/f89f26a6-0843-4879-88d4-d085f5a7c01a)
 
+---
+
 - Speech Recognition and Text Display
 Speech recognition using "SpeechRecognize" in Python. 
 
 ![textobj_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/996486ca-1ef3-44a2-b5fb-471adcd80d04)
+
+---
 
 - Transition Mode Using Touch Sensor
 The touch sensor enables switching to object generation mode, switching to text display mode, and switching recognition languages.
@@ -39,10 +43,14 @@ The touch sensor enables switching to object generation mode, switching to text 
 ![demo_flyobj_PC_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/399e7e06-f233-4c76-9c2b-2415d09f149b)
 ![demo_textobj_PC_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/e6e67482-6b7b-487c-b770-9161dbca091b)
 
+---
+
 ## Demo on Nreal
 
 ![flyobj_onNreal_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/1fc57f90-bf97-4d54-aac5-bde312461910)
 ![textobj_onNreal_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/83070ae5-8773-4219-9730-440085a45506)
+
+---
 
 # Installation
 ```bash
