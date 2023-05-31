@@ -165,7 +165,7 @@ class TextObj():
         for obj in cls.objs:
             obj.draw()
 
-def main_loop(width=800, height=600):
+def main_loop(width=1920, height=1080):
     """
     The main loop of pygame.
     Flying objects are drawn pygame display.
@@ -175,6 +175,7 @@ def main_loop(width=800, height=600):
         height (number): Height of pygame display.    
     """
     pygame.init()
+    #screen = pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL | pygame.FULLSCREEN)
     screen = pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL)
     # For text drawing
     TextObj.screen = screen

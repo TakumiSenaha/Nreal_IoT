@@ -138,21 +138,24 @@ class Voice:
         self.callback = callback
         self.language = language
         self.lang_list = ["ja-JP", "us-EN"]
+        self.recognition_enable = False
+
         if (api_key != None):
-            with open("apikey.json") as f:
+            with open(api_key) as f:
                 self.credentials = f.read()
 
         def get_text(recognizer, audio):
-            try:
-                if api_key == None:
-                    self.text = recognizer.recognize_google(audio, language=language)
-                else:
-                    self.text = recognizer.recognize_google_cloud(audio, credentials_json="./apikey.json", language=language)
-                self.callback(self.text)
-            except UnknownValueError:
-                print("Recognition could not understand audio")
-            except RequestError as e:
-                print("Could not request results from Google Speech Recognition service; {0}".format(e))
+            if self.recognition_enable:
+                try:
+                    if api_key == None:
+                        self.text = recognizer.recognize_google(audio, language=language)
+                    else:
+                        self.text = recognizer.recognize_google_cloud(audio, credentials_json=api_key, language=language)
+                    self.callback(self.text)
+                except UnknownValueError:
+                    print("Recognition could not understand audio")
+                except RequestError as e:
+                    print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
         with self.m as source:
             self.r.adjust_for_ambient_noise(source) 
