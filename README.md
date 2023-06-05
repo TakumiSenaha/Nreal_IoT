@@ -40,7 +40,7 @@ Speech recognition using "SpeechRecognize" in Python.
 - Transition Mode Using Touch Sensor
 The touch sensor enables switching to object generation mode, switching to text display mode, and switching recognition languages.
 
-![demo_flyobj_PC_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/399e7e06-f233-4c76-9c2b-2415d09f149b)
+![demo_flyobj_PC_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/a20b2134-7b38-4e1e-a949-e3b419f07e95)
 ![demo_textobj_PC_gif](https://github.com/TakumiSenaha/Nreal_IoT/assets/117294735/e6e67482-6b7b-487c-b770-9161dbca091b)
 
 ---
